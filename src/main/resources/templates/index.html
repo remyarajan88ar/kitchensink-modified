@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>kitchensink</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/screen.css"/>
+</head>
+<body>
+<div id="container">
+    <div class="dualbrand">
+        <img src="../resources/static/gfx/rhjb_eap_logo.png" width="300" height="175"/>
+    </div>
+    <div id="content">
+
+        <h1>Welcome to JBoss!</h1>
+
+        <div>
+            <p>You have successfully deployed a Jakarta EE Enterprise
+                Application.</p>
+        </div>
+
+        <form id="reg" action="#" th:action="@{/member/add}" th:object="${newMember}" method="post">
+            <h2>Member Registration</h2>
+            <p>Enforces annotation-based constraints defined on the
+                model class.</p>
+
+            <div class="form-group col-md-8">
+                <label for="name" class="titleCell">Name:</label>
+                <input type="text" th:field="*{name}" class="form-control" id="name"
+                    placeholder="Name"> <span
+                    th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                    class="invalid"></span>
+            </div>
+            <div class="form-group col-md-8">
+                <label for="email" class="titleCell">Email</label> <input
+                    type="text" th:field="*{email}" class="form-control" id="email"
+                    placeholder="Email"> <span
+                    th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                    class="invalid"></span>
+            </div>
+            <div class="form-group col-md-8">
+                <label for="age" class="titleCell">Phone Number</label> <input
+                    type="number" th:field="*{phoneNumber}" class="form-control"
+                    id="age" placeholder="Phone Number"> <span
+                    th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                    class="invalid"></span>
+            </div>
+            <div class="col-md-6">
+                <input type="submit" class="btn register" value="Register Member">
+            </div>
+
+        </form>
+
+        <div th:switch="${members}" class="container my-5">
+            <h2>Members</h2>
+            <h2 th:case="null">No registered members.</h2>
+            <div th:case="*">
+                <div id="member-list">
+                <table class="simpletablestyle">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone #</th>
+                        <th>REST URL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member : ${members}">
+                        <td th:text="${member.id}"></td>
+                        <td th:text="${member.name}"></td>
+                        <td th:text="${member.email}"></td>
+                        <td th:text="${member.phoneNumber}"></td>
+                        <td><a th:href="@{/rest/members/{id}(id=${member.id})}">See member</a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <p>REST URL for all members: <a href="#member-list">/rest/member/list</a></p>
+                    </tfoot>
+                </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="aside">
+        <p>Learn more about Red Hat JBoss Enterprise Application Platform.</p>
+        <ul>
+            <li><a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/">Documentation</a>
+            </li>
+            <li><a href="http://www.redhat.com/en/technologies/jboss-middleware/application-platform">Product
+                Information</a></li>
+        </ul>
+    </div>
+    <div id="footer">
+        <p>
+            This project was generated from a Maven archetype from
+            JBoss.<br/>
+        </p>
+    </div>
+</div>
+</body>
+</html>
